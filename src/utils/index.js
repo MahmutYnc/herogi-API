@@ -1,10 +1,6 @@
-var Papa = require("papaparse");
-var file = "./utils/pace";
-
-var rows;
-Papa.parse(file, {
-  complete: function (results) {
-    console.log("Finished:", results.data);
-    rows = results.data;
-  },
-});
+module.exports = {
+  paceCSV:
+    "C:\\Users\\siebe\\Desktop\\ReactJs-Antd\\herogi-case-API\\src\\utils\\pace.csv",
+  usersCSV:
+    "C:/Users/siebe/Desktop/ReactJs-Antd/herogi-case-API/src/utils/users.csv",
+};
