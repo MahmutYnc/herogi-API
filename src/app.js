@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8080;
+const port = 3001;
 const fs = require("fs");
 const Papa = require("papaparse");
 
@@ -43,9 +43,21 @@ app.get("/users/:id", (req, res) => {
   res.send(user);
 });
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+var cors = require("cors");
+
+app.use(cors()); // Use this after the variable declaration
 
 module.exports = {
   app,
