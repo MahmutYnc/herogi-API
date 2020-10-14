@@ -5,12 +5,12 @@ const fs = require("fs");
 const Papa = require("papaparse");
 
 var path = require("./utils/index.js");
-let item = [];
 
-const readCSV = async (csvfile) => {
+const readCSV = (csvfile) => {
+  let item = [];
   const csvFile = fs.readFileSync(csvfile);
   const csvData = csvFile.toString();
-  new Promise((resolve) => {
+  new Promise(() => {
     Papa.parse(csvData, {
       header: true,
       step: (row) => {
@@ -21,19 +21,26 @@ const readCSV = async (csvfile) => {
   return item;
 };
 
-var paceC;
-const test = async (csvfile) => {
-  const pData = await readCSV(csvfile);
-  console.log(pData);
-  paceC = pData;
-  return pData;
-};
+let paceList = readCSV(path.paceCSV);
 
-var paceJson = test(path.paceCSV);
-
-console.log(item);
 app.get("/pace", (req, res) => {
-  res.send("result is " + JSON.stringify(item));
+  res.json(paceList);
+});
+
+let usersList = readCSV(path.usersCSV);
+
+app.get("/users", (req, res) => {
+  res.json(usersList);
+});
+
+app.get("/users/:id", (req, res) => {
+  const { id } = req.params;
+
+  let user = usersList.filter((index) => {
+    return index.userid == id ? index : null;
+  });
+
+  res.send(user);
 });
 
 app.listen(port, () => {
