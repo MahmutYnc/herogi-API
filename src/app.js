@@ -43,14 +43,6 @@ app.get("/users/:id", (req, res) => {
   res.send(user);
 });
 
-const { JSDOM } = require("jsdom");
-const { window } = new JSDOM("");
-const $ = require("jquery")(window);
-
-app.get("/allData", (req, res) => {
-  res.send($.extend(true, [], usersList, paceList));
-});
-
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
   res.header(
